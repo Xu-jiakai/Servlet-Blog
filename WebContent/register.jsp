@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+<title>Register</title>
 <link rel='stylesheet' href='css/bootstrap.min.css'>
 <link rel='stylesheet' href='css/login.css'>
 </head>
@@ -12,20 +12,24 @@
 <div class="container">
 		<div class="row">
 			<div class="col-md-offset-3 col-md-6">
-				<form class="form-horizontal" action="Login" method="post">
-					<span class="heading">User Login</span>
+				<form class="form-horizontal" action="Register" method="post">
+					<span class="heading">User Register</span>
 					<div class="form-group">
 						<input type="text" class="form-control" name="username" required="required"
 							placeholder="Username"> <i class="fa fa-user"></i>
 					</div>
 					<div class="form-group help">
-						<input type="password" class="form-control" name="password" required="required"
+						<input type="password" class="form-control" name="password" id="pwd1" required="required"
 							placeholder="Password"> <i class="fa fa-lock"></i>
 					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-default">Login</button>
+					<div class="form-group help">
+						<input type="password" class="form-control" name="password_again" id="pwd2" required="required"
+							placeholder="Password Again"> <i class="fa fa-lock"></i>
+						<p id="message"></p>
 					</div>
-					<a href="register.jsp">No account?Go to register</a>
+					<div class="form-group">
+						<button type="submit" id ="submit" class="btn btn-default">Register</button>
+					</div>
 				</form>
 			</div>
 		</div>

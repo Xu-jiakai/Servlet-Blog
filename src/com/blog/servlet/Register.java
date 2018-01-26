@@ -1,7 +1,7 @@
 package com.blog.servlet;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Objects;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,20 +16,20 @@ import com.blog.util.MessageType;
 import com.blog.util.Validator;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Register
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/Register")
+public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   private UserDao userDao;
+	private UserDao userDao;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Register() {
         super();
         // TODO Auto-generated constructor stub
     }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -44,31 +44,33 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String username=request.getParameter("username");
-		String password=request.getParameter("password");
-		//check the input if null
-//		if(Validator.hasNull(username,password)) {
-//			request.setAttribute("msgType", MessageType.ERROR);
-//			request.setAttribute("msg", "Name and password cannot be empty");
-//			request.getRequestDispatcher("login.jsp").forward(request, response);
-//			return;
-//		}
+		String pwd1=request.getParameter("password");
+		String pwd2=request.getParameter("password_again");
 		
-		Optional<User> user=userDao.check(username);
-		if(user.isPresent()&&user.get().getPassword().equals(password)) {
-			request.getSession().setAttribute("user", user.get().getUsername());
-			response.sendRedirect("index.jsp");//must be add a return
+		if(!Objects.equals(pwd1,pwd2)) {
+			request.setAttribute("asgType", MessageType.ERROR);
+			request.setAttribute("msg", "The password is different twice");
+			request.getRequestDispatcher("register.jsp").forward(request, response);
 			return;
-		}else {
-			request.setAttribute("msgType", MessageType.ERROR);
-			request.setAttribute("msg", "wrong username and password,please input again");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
+		User user=new User();
+		user.setUsername(username);
+		user.setPassword(pwd1);
+		userDao.addUser(user);
+		response.sendRedirect("login.jsp");
+		return;
+		
 	}
 	
 	@Override
 	public void init()throws ServletException{
 		super.init();
 		userDao=DaoFactory.getUserDao();
+	}
+	
+	@Override
+	public void destroy() {
+		super.destroy();
 	}
 
 }
