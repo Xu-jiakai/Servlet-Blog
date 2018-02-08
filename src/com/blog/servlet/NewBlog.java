@@ -1,7 +1,8 @@
 package com.blog.servlet;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,23 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.blog.dao.BlogDao;
 import com.blog.dao.DaoFactory;
-import com.blog.dao.UserDao;
-import com.blog.entity.User;
-import com.blog.util.MessageType;
-import com.blog.util.Validator;
+import com.blog.entity.Blog;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class NewBlog
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/NewBlog")
+public class NewBlog extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   private UserDao userDao;
+	private BlogDao blogDao;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public NewBlog() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,26 +42,27 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// get the input value
-		String username=new String(request.getParameter("username").getBytes("iso-8859-1"),"utf-8");
-		String password=request.getParameter("password");
-		
-		Optional<User> user=userDao.check(username);
-		if(user.isPresent()&&user.get().getPassword().equals(password)) {
-			request.getSession().setAttribute("user", user.get().getUsername());
-			response.sendRedirect("index.jsp");//must be add a return
-			return;
-		}else {
-			request.setAttribute("msgType", MessageType.ERROR);
-			request.setAttribute("msg", "wrong username and password,please input again");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}
+		// TODO Auto-generated method stub
+		String title=request.getParameter("title");
+		String author=request.getParameter("author");
+		String type=request.getParameter("type");
+		String content=request.getParameter("content");
+		Date date=new Date();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String create_time=sdf.format(date);
+		Blog blog=new Blog();
+		blog.setTitle(title);
+		blog.setAuthor(author);
+		blog.setType(type);
+		blog.setContent(content);
+		blog.setCreate_time(create_time);
+		blogDao.addPage(blog);
+		response.sendRedirect("index.jsp");
+		return;
 	}
-	
-	@Override
 	public void init()throws ServletException{
 		super.init();
-		userDao=DaoFactory.getUserDao();
+		blogDao=DaoFactory.getBlogDao();
 	}
 
 }

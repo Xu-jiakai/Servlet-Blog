@@ -18,7 +18,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Optional<User> check(String username) {
-		// TODO Auto-generated method stub
+		// select the user message
 		User user=null;
 		String sql="select * from blog_user where username=?";
 		PreparedStatement pstmt=null;
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean hasUsername(String username) {
-		// TODO Auto-generated method stub
+		// checking the username to the database 
 		String sql="select * from blog_user where username=?";
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -66,14 +66,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void addUser(User user) {
-		// TODO Auto-generated method stub
+		// add the new user to the database
 		String sql="insert into blog_user(username,password) values(?,?)";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(sql);
+			//
 			pstmt.setString(1, user.getUsername());
 			pstmt.setString(2, user.getPassword());
-			pstmt.executeQuery();
-			
+			pstmt.executeUpdate();
 			
 			conn.close();
 			pstmt.close();

@@ -15,11 +15,11 @@
 				<form class="form-horizontal" action="Login" method="post">
 					<span class="heading">User Login</span>
 					<div class="form-group">
-						<input type="text" class="form-control" name="username" required="required"
+						<input type="text" class="form-control" name="username" required="true"
 							placeholder="Username"> <i class="fa fa-user"></i>
 					</div>
 					<div class="form-group help">
-						<input type="password" class="form-control" name="password" required="required"
+						<input type="password" class="form-control" name="password" required="true"
 							placeholder="Password"> <i class="fa fa-lock"></i>
 					</div>
 					<div class="form-group">

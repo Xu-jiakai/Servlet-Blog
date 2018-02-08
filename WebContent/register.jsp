@@ -15,15 +15,15 @@
 				<form class="form-horizontal" action="Register" method="post">
 					<span class="heading">User Register</span>
 					<div class="form-group">
-						<input type="text" class="form-control" name="username" required="required"
+						<input type="text" class="form-control" name="username" required="true"
 							placeholder="Username"> <i class="fa fa-user"></i>
 					</div>
 					<div class="form-group help">
-						<input type="password" class="form-control" name="password" id="pwd1" required="required"
+						<input type="password" class="form-control" name="password" id="pwd1" required="true"
 							placeholder="Password"> <i class="fa fa-lock"></i>
 					</div>
 					<div class="form-group help">
-						<input type="password" class="form-control" name="password_again" id="pwd2" required="required"
+						<input type="password" class="form-control" name="password_again" id="pwd2" required="true"
 							placeholder="Password Again"> <i class="fa fa-lock"></i>
 						<p id="message"></p>
 					</div>
